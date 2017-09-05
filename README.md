@@ -10,3 +10,7 @@ A folder was added as the Phase 1 of Kinect project, which accomplishes to measu
 1st Sept 2017 UPDATED
 --
 A folder was added as the Phase 2 of Kinect project, which accomplishes Correspondence Grouping Algorithm with aid of recognition module inside PCL (Point Cloud Library). This phase basically completes the most difficult part in the project and general process was adjusted due to this algorithm.
+
+5th Sept 2017 UPDATED
+--
+A folder was added as the Phase 3 of Kinect project, which implements Random Sample Consensus (RANSAC) algorithm as counterpart of previous phase's algorithm. However, the exact accomplishment is not quite satisfatory when pcd files are large and complex.
