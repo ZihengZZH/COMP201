@@ -68,19 +68,19 @@ void changeParameters();
 int main()
 {
 
-	//displayPointCloud("kinect_scan.pcd");
+	
 	// Step 1 IFC2PCD
-	/*displayBackground();
+	displayBackground();
 	displayIFC2OBJ();
 	IFC2OBJ();
 	OBJ2PCD();
 	// displayPointCloud("IfcOpenHouse.pcd");
 	Sleep(2000);
-	system("CLS");*/
+	system("CLS");
 	
 
 	// Step 2 Kinect2PCD
-	/*displayBackground();
+	displayBackground();
 	try {
 		Kinect kinect;
 		kinect.run();
@@ -89,7 +89,7 @@ int main()
 		std::cout << ex.what() << std::endl;
 	}
 	Sleep(2000);
-	system("CLS");*/
+	system("CLS");
 
 	// Step 3 Pose estimation
 	displayBackground();
