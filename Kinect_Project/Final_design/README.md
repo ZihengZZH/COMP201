@@ -1,1 +1,6 @@
 # Final Design of Kinect Project
+
+TO DO
+* FINISH DETAILS
+* TEST & VALIDATE SYSTEM
+* COMPLETE REPORT
