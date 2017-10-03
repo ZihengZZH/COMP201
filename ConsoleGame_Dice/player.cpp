@@ -23,7 +23,7 @@ void player::main(void){
 
 
 void player::run(void) {
-    int input;
+    int input, dice;
     while (true) {
         std::cout << "Your current score " << get_sum(points) << "\nDo you want to hold the current score?\n";
         std::cout << "1 to hold; others to cancel\n";
@@ -33,13 +33,14 @@ void player::run(void) {
             break;
         }
         std::cout << "Dice Rolling\n";
-        int dice = rand()%6+1;
+        dice = rand()%6+1;
         Sleep(1000);
         std::cout << "Dice number " << dice << std::endl;
         if (dice == 1){
             std::cout << "Next turn\n";
             break;
         }else{
+	    std::cout<<"Keep rolling\n";
             points.push_back(dice);
         }
 
