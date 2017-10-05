@@ -9,9 +9,9 @@ using namespace std;
 
 class player {
 
-private:
-	std::string name;
+private:	
 	int id;
+	std::string name;
 	vector<int> points;
 
 public:
