@@ -1,58 +1,63 @@
 #include "player.h"
 
-player::player(std::string input_name, int input_id) {
-    name = input_name;
-    id = input_id;
-    victory = false;
+player::player(string input_name, int input_id) {
+	name = input_name;
+	id = input_id;
+	current = (input_id == 0) ? true : false;
+	victory = false;
+	cout << "player " << input_name << " has been created\n";
 }
 
 player::~player(void) {
+	cout << "Object destructed\n";
 
-
-}
-
-void player::main(void){
-    while (!victory){
-        run();
-    }
-
-    std::cout << "Congratulations\n";
-
-}
-
-
+} 
 
 void player::run(void) {
-    int input, dice;
-    while (true) {
-        std::cout << "Your current score " << get_sum(points) << "\nDo you want to hold the current score?\n";
-        std::cout << "1 to hold; others to cancel\n";
-        std::cin >> input;
-        if (input == 1){
-            std::cout << "Next turn\n";
-            break;
-        }
-        std::cout << "Dice Rolling\n";
-        dice = rand()%6+1;
-        Sleep(1000);
-        std::cout << "Dice number " << dice << std::endl;
-        if (dice == 1){
-            std::cout << "Next turn\n";
-            break;
-        }else{
-	    std::cout<<"Keep rolling\n";
-            points.push_back(dice);
-        }
+	int input, dice;
+	cout << endl;
+	while (true) {
+		cout << name << " Your current score " << get_sum(points) 
+			<< "\nDo you want to hold the current score?\n" 
+			<< "1 to hold; others to roll the dice\n";
+		cin >> input;
+		if (input == 1) {
+			current = false;
+			cout << "Next turn\n";
+			break;
+		}
+		cout << "Dice Rolling\n";
+		dice = rand() % 6 + 1;
+		Sleep(500);
+		cout << "Dice number " << dice << endl;
+		if (dice == 1) {
+			current = false;
+			cout << "Next turn\n";
+			break;
+		}
+		else {
+			cout << "Keep rolling\n";
+			points.push_back(dice);
+		}
 
-        if (get_sum(points) >= 100){
-            victory = true;
-            std::cout << "You win\n";
-            break;
-        }
-    }
+		if (get_sum(points) >= 40) {
+			victory = true;
+			cout << "Congrats " << name << "! You win\n";
+			break;
+		}
+	}
 }
 
-int player::get_sum(std::vector<int>& nums) {
+void player::show_list(vector<int>& nums) {
+	for (auto num : nums) {
+		cout << num << "-";
+	}
+	cout << endl;
+
+}
+
+
+int player::get_sum(vector<int>& nums) {
 	int sum = 0;
 	for (int num : nums) {
 		sum += num;
