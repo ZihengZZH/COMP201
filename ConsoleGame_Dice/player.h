@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
+#include <ctime>
 #include <windows.h>
 
 using namespace std;
