@@ -14,6 +14,7 @@ player::~player(void) {
 } 
 
 void player::run(void) {
+	srand(time(0));
 	int input, dice;
 	cout << endl;
 	while (true) {
