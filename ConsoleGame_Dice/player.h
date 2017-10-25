@@ -10,9 +10,10 @@ using namespace std;
 
 class player {
 
-public:
-	int id;
-	std::string name;
+protected:
+	// WHEN input == 1, choose to hold
+	int id, dice, input;
+	string name;
 	vector<int> log;
 	vector<int> points;
 
@@ -21,13 +22,13 @@ public:
 	bool victory;
 
 public:
+	player();
 	player(string input_name, int input_id);
 	~player(void);
 	void run(void);
-
 	void show_list(vector<int>& nums);
 	int get_sum(vector<int>& nums);
-
+	string get_name(void);
 
 };
 
@@ -36,24 +37,22 @@ public:
 class autoplayer : public player {
 
 private:
-	int gain;
-	bool always;
-	vector<int> cur;
+	int num_throw, gain, thrw;
+	bool throws;
 
 public:
 
-	autoplayer(string input_name, int input_id, bool input_always) : player(input_name, input_id) {
-		always = input_always;
-		if (!always) {
-			cout << "Please enter gain for each turn ";
-			cin >> gain;
-			cout << endl;
-		}
+	autoplayer() {};
+
+	autoplayer(string input_name, int input_id, bool input_throws, int input_thrw, int input_gain) : player(input_name, input_id) {
+		throws = input_throws;
+		num_throw = input_thrw;
+		gain = input_gain;
 	};
 
 	~autoplayer(void) {};
 
-	bool enough_gain(vector<int>& cur) {
+	inline bool enough_gain(vector<int>& cur) {
 		int sum = 0;
 		for (auto i : cur) {
 			sum += i;
@@ -66,40 +65,42 @@ public:
 		}
 	};
 
-
-	void auto_run(void) {
+	inline void auto_run(void) {
 		srand(time(0));
-		int dice;
+		log = {};
+		thrw = 0; 
+		cout << name << " your current score is _" << get_sum(points) << "_\n";
 		while (true) {
-			cur = {};
-			cout << name << " your current score is _" << get_sum(points) << "_\n";
 			dice = rand() % 6 + 1;
-			log.push_back(dice);
-			cur.push_back(dice);
-			Sleep(250);
+			thrw += 1;
+			Sleep(100);
 			cout << "Dice number _" << dice << "_" << endl;
 			if (dice == 1) {
-				cout << "Next turn\n";
+				cout << "Next turn \t";
 				break;
 			}
-			else {
-				cout << "Keep rolling\n";
-				points.push_back(dice);
+			else if (throws && thrw == num_throw) {
+				cout << "Next turn \t";
+				points.push_back(get_sum(log));
+				if (get_sum(points) >= 100) {
+					victory = true;
+					//cout << "Congrats " << name << "! You win\n";
+				}
+				break;
 			}
-
-			if (!always && enough_gain(cur)) {
-				cout << "Next turn\n";
+			else if (!throws && enough_gain(log)) {
+				cout << "Next turn \t";
+				points.push_back(get_sum(log));
+				if (get_sum(points) >= 100) {
+					victory = true;
+					cout << "Congrats " << name << "! You win\n";
+				}
 				break;
 			} 
-			else if (get_sum(points) >= 100) {
-				victory = true;
-				cout << "Congrats " << name << "! You win\n";
-				show_list(log);
-				break;
+			else {
+				cout << "Keep rolling\n";
+				log.push_back(dice);
 			}
 		}
-
 	};
-
-
 };

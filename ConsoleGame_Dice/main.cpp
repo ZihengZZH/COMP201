@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "autotest.h"
 #include "player.h"
 
 using namespace std;
@@ -11,27 +12,14 @@ maybe in the generic sequence with which they were created
 
 
 bool is_victory(vector<player>& players) {
-
 	bool victory = false;
 	for (auto player : players) {
 		victory |= player.victory;
 	}
 	cout << "Any victory? " << boolalpha << victory << endl;
 	return victory;
-
 }
 
-
-bool is_victory_auto(vector<autoplayer>& players) {
-
-	bool victory = false;
-	for (auto player : players) {
-		victory |= player.victory;
-	}
-	cout << "Any victory? " << boolalpha << victory << endl;
-	return victory;
-
-}
 
 int main() {
 
@@ -40,13 +28,17 @@ int main() {
 	vector<player> players;
 	vector<autoplayer> autoplayers;
 
-	cout << "It is a multiplayer game and supports automatical running\n Would you like to automatical run the program\n 1 to confirm; others to cancel\n";
+	cout << "It is a multiplayer game and supports automatical running\n"
+		<< "Would you like to automatical run the program\n"
+		<<"1 to confirm; others to cancel\n";
 	cin >> auto_running;
 
-	cout << "How many of you want to join in? ";
-	cin >> player_num;
-	cout << endl;
-
+	if (auto_running != 1) {
+		cout << "How many of you want to join in? ";
+		cin >> player_num;
+		cout << endl;
+	}
+	
 	if (auto_running != 1) {
 
 		for (int i = 0; i < player_num; i++) {
@@ -57,7 +49,6 @@ int main() {
 		}
 
 		while (!is_victory(players)) {
-
 			for (int i = 0; i < players.size(); i++) {
 				if (players[i].current) {
 					players[i].run();
@@ -66,44 +57,15 @@ int main() {
 						players[++i].current = true;
 					else
 						players[0].current = true;
-
 					break;
 				}
 			}
 		}
-
 	}
 	else {
-
-		/*for (int k = 0; k < player_num; k++) {
-			autoplayer B(to_string(k), k, false); // USE GAIN FOR LOOP STRATEGY
-			autoplayers.push_back(B);
-		}*/
-
-		autoplayer B("GAINS", 0, false);
-		autoplayer C("ALWAYS", 1, true);
-		autoplayers.push_back(B);
-		autoplayers.push_back(C);
-
-		while (!is_victory_auto(autoplayers)) {
-
-			for (int i = 0; i < autoplayers.size(); i++) {
-				if (autoplayers[i].current) {
-					autoplayers[i].auto_run();
-					autoplayers[i].current = false;
-					if (i != autoplayers.size() - 1)
-						autoplayers[++i].current = true;
-					else
-						autoplayers[0].current = true;
-
-					break;
-				}
-			}
-		}
+		autotest result;
+		result.statistics();
 	}
-
-
-
 
 	system("pause");
 
