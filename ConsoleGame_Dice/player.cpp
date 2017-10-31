@@ -6,6 +6,7 @@ player::player(string input_name, int input_id) {
 	name = input_name;
 	id = input_id;
 	current = (input_id == 0) ? true : false;
+	point_victory = 20;
 	victory = false;
 	cout << "player " << input_name << " has been created\n";
 }
@@ -27,7 +28,7 @@ void player::run(void) {
 		}
 		cout << "Dice Rolling ... ";
 		dice = rand() % 6 + 1;
-		Sleep(100);
+		//Sleep(100);
 		cout << " Dice number _" << dice << "_" << endl;
 		if (dice == 1) {
 			cout << "Next turn \t";
@@ -39,7 +40,7 @@ void player::run(void) {
 		}
 
 		// When points greater than 100
-		if (get_sum(points) >= 100) {
+		if (get_sum(points) >= point_victory) {
 			victory = true;
 			cout << "Congrats " << name << "! You win\n";
 			break;

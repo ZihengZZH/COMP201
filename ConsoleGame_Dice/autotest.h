@@ -39,7 +39,7 @@ public:
 
 	inline void run() {
 		autoplayer B("GAINS", 0, false, 0, 10);
-		autoplayer C("THROWS", 1, true, 3, 0);
+		autoplayer C("THROWS", 1, true, 5, 0);
 		autoplayers.push_back(B);
 		autoplayers.push_back(C);
 

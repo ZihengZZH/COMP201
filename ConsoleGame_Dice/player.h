@@ -12,7 +12,7 @@ class player {
 
 protected:
 	// WHEN input == 1, choose to hold
-	int id, dice, input;
+	int id, dice, input, point_victory;
 	string name;
 	vector<int> log;
 	vector<int> points;
@@ -82,16 +82,16 @@ public:
 			else if (throws && thrw == num_throw) {
 				cout << "Next turn \t";
 				points.push_back(get_sum(log));
-				if (get_sum(points) >= 100) {
+				if (get_sum(points) >= point_victory) {
 					victory = true;
-					//cout << "Congrats " << name << "! You win\n";
+					cout << "Congrats " << name << "! You win\n";
 				}
 				break;
 			}
 			else if (!throws && enough_gain(log)) {
 				cout << "Next turn \t";
 				points.push_back(get_sum(log));
-				if (get_sum(points) >= 100) {
+				if (get_sum(points) >= point_victory) {
 					victory = true;
 					cout << "Congrats " << name << "! You win\n";
 				}

@@ -71,3 +71,20 @@ int main() {
 
 	return 0;
 }
+
+
+/*
+
+			TEST RESULTS
+
+	pointsToWin		GAINS		THROWS		#GAINS		#THROWS
+	200				10			3			46			4
+	100				10			3			58			12
+	100				20			2			97			3
+	50				10			3			82			18
+	50				10			1			100			0			
+	50				5			2			96			4			
+	20				10			5			84			16
+
+
+*/
