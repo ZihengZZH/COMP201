@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include "autotest.h"
 #include "player.h"
 
@@ -11,60 +13,59 @@ maybe in the generic sequence with which they were created
 */
 
 
-bool is_victory(vector<player>& players) {
-	bool victory = false;
-	for (auto player : players) {
-		victory |= player.victory;
-	}
-	cout << "Any victory? " << boolalpha << victory << endl;
-	return victory;
-}
-
-
 int main() {
 
 	int player_num, auto_running;
-	string player_name;
+	string player_name, line;
+	vector<string> player_names;
 	vector<player> players;
 	vector<autoplayer> autoplayers;
+	vector<int> gain_vals = { 5,10 };
+	vector<int> throw_vals = { 2,3 };
+	vector<int> point_vals = { 50,100 };
 
-	cout << "It is a multiplayer game and supports automatical running\n"
-		<< "Would you like to automatical run the program\n"
-		<<"1 to confirm; others to cancel\n";
-	cin >> auto_running;
+	cout << "---------------------------------------------\n"
+		<< "| " << setw(30) << " DICE GAME FOR ELEC362" << setw(15) << "|\n"
+		<< "---------------------------------------------\n"
+		<< "It is a dice game called Pig, "
+		<< "first described in print by John Scarne in 1945.\n"
+		<< "This game supports automatical running with two strategies.\n"
+		<< "First is to hold at specific gain and "
+		<< "the other is to hold after specific number of throws\n"
+		<< "------------------------------------------------------------\n"
+		<< "Would you like to automatically run the program\n"
+		<< "1 to confirm; others to cancel\n";
+	getline(cin, line);
+	stringstream ss(line);
+	ss >> auto_running;
 
 	if (auto_running != 1) {
+
 		cout << "How many of you want to join in? ";
+		
 		cin >> player_num;
+		while (cin.fail()) {
+			cout << "Enter a valid integer. ";
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> player_num;
+		}
+
 		cout << endl;
-	}
-	
-	if (auto_running != 1) {
 
 		for (int i = 0; i < player_num; i++) {
 			cout << "Please enter No " << i << " player name ";
 			cin >> player_name;
-			player A(player_name, i);
-			players.push_back(A);
+			player_names.push_back(player_name);
 		}
 
-		while (!is_victory(players)) {
-			for (int i = 0; i < players.size(); i++) {
-				if (players[i].current) {
-					players[i].run();
-					players[i].current = false;
-					if (i != players.size() - 1)
-						players[++i].current = true;
-					else
-						players[0].current = true;
-					break;
-				}
-			}
-		}
+		player* start = new player("start");
+		start->begin(player_names);
+		
 	}
 	else {
-		autotest result;
-		result.statistics();
+		autotest* result = new autotest("start");
+		result->statistics(gain_vals, throw_vals, point_vals);
 	}
 
 	system("pause");
@@ -73,18 +74,3 @@ int main() {
 }
 
 
-/*
-
-			TEST RESULTS
-
-	pointsToWin		GAINS		THROWS		#GAINS		#THROWS
-	200				10			3			46			4
-	100				10			3			58			12
-	100				20			2			97			3
-	50				10			3			82			18
-	50				10			1			100			0			
-	50				5			2			96			4			
-	20				10			5			84			16
-
-
-*/

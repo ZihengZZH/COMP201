@@ -2,58 +2,79 @@
 
 player::player() {}
 
+player::player(string start) {
+	if (start == "start")
+		cout << "Start the game\n";
+}
+
 player::player(string input_name, int input_id) {
 	name = input_name;
 	id = input_id;
 	current = (input_id == 0) ? true : false;
-	point_victory = 20;
+	point_victory = 100;
 	victory = false;
-	cout << "player " << input_name << " has been created\n";
+	// cout << "player " << input_name << " has been created\n";
 }
 
 player::~player(void) {}
+
+void player::begin(vector<string> player_names) {
+
+	for (int j = 0; j < player_names.size(); j++) {
+		player A(player_names[j], j);
+		players.push_back(A);
+	}
+
+	while (true) {
+		for (int i = 0; i < players.size(); i++){
+			if (players[i].current) {
+				players[i].run();
+				players[i].current = false;
+				if (i != players.size() - 1)
+					players[++i].current = true;
+				else
+					players[0].current = true;
+				break;
+			}
+		}
+		if (is_victory()) break;
+	}
+
+}
 
 void player::run(void) {
 	srand(time(0));
 	cout << endl;
 	log = {};
-	cout << name << " Your current score _" << get_sum(points) << "_\n Hold the turn total?";
+	cout << name << " Your current score _" << get_sum(points) << "_\nHold the turn total?";
 	while (true) {
-		cout << "1 to hold; others to roll the dice ";
-		cin >> input;
-		if (input == 1) {
+		cout << " 1 to hold; others to roll the dice ";
+		getline(cin, input);
+		if (input == "1") {
 			cout << "Next turn \t";
 			points.push_back(get_sum(log));
-			break;
-		}
-		cout << "Dice Rolling ... ";
-		dice = rand() % 6 + 1;
-		//Sleep(100);
-		cout << " Dice number _" << dice << "_" << endl;
-		if (dice == 1) {
-			cout << "Next turn \t";
+			// When points greater than 100
+			if (get_sum(points) >= point_victory) {
+				victory = true;
+				cout << "Congrats " << name << "! You win\n";
+			}
 			break;
 		}
 		else {
-			cout << "Keep rolling ";
-			log.push_back(dice);
-		}
-
-		// When points greater than 100
-		if (get_sum(points) >= point_victory) {
-			victory = true;
-			cout << "Congrats " << name << "! You win\n";
-			break;
+			cout << "Dice Rolling ... ";
+			dice = rand() % 6 + 1;
+			Sleep(100);
+			cout << " Dice number _" << dice << "_" << endl;
+			if (dice == 1) {
+				cout << "Next turn \t";
+				break;
+			}
+			else {
+				cout << "Keep rolling ";
+				log.push_back(dice);
+			}
 		}
 	}
-}
-
-void player::show_list(vector<int>& nums) {
-	for (auto num : nums) {
-		cout << num << "-";
-	}
-	cout << endl;
-
 }
 
 int player::get_sum(vector<int>& nums) {
@@ -66,4 +87,14 @@ int player::get_sum(vector<int>& nums) {
 
 string player::get_name(void) {
 	return name;
+}
+
+bool player::is_victory() {
+	bool any_victory = false;
+	for (auto player : players) {
+		any_victory |= player.victory;
+	}
+	// cout << "Any victory? " << boolalpha << victory << endl;
+	return any_victory;
+
 }
