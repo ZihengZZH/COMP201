@@ -7,3 +7,8 @@ Dependencies:
 
 External devices:
 * Logitech Web-cam C920 * 2
+
+
+Update
+----
+A new source file was added, disp_image.cpp to validate the practicality of the StereoBM and StereSGBM alogrithms. Basically, the algorithms worked with the calibrated images (stereo calibration). When the algorithms were applied to video stream or un-calibrated images, the output did not make any sense. So it is paramount to validate these algorithms first for following project.
