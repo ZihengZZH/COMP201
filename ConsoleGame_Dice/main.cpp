@@ -20,13 +20,15 @@ int main() {
 	vector<string> player_names;
 	vector<player> players;
 	vector<autoplayer> autoplayers;
-	vector<int> gain_vals = { 5,10 };
-	vector<int> throw_vals = { 2,3 };
-	vector<int> point_vals = { 50,100 };
 
-	cout << "---------------------------------------------\n"
+	// All the test conditions
+	vector<int> gain_vals = { 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 };
+	vector<int> throw_vals = { 1,2,3,4,5,6,7,8 };
+	vector<int> point_vals = { 50,60,70,80,90,100 };
+
+	cout << " --------------------------------------------\n"
 		<< "| " << setw(30) << " DICE GAME FOR ELEC362" << setw(15) << "|\n"
-		<< "---------------------------------------------\n"
+		<< " --------------------------------------------\n"
 		<< "It is a dice game called Pig, "
 		<< "first described in print by John Scarne in 1945.\n"
 		<< "This game supports automatical running with two strategies.\n"
@@ -35,6 +37,7 @@ int main() {
 		<< "------------------------------------------------------------\n"
 		<< "Would you like to automatically run the program\n"
 		<< "1 to confirm; others to cancel\n";
+
 	getline(cin, line);
 	stringstream ss(line);
 	ss >> auto_running;
@@ -64,8 +67,10 @@ int main() {
 		
 	}
 	else {
+
 		autotest* result = new autotest("start");
-		result->statistics(gain_vals, throw_vals, point_vals);
+		result->statistics_ppl(gain_vals, throw_vals, point_vals);
+
 	}
 
 	system("pause");

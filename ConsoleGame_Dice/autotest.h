@@ -100,7 +100,7 @@ public:
 	autotest(int point_vic, int gain_v, int throw_v) {
 		time = 0, gain_wins = 0, throw_wins = 0;
 		gain_val = gain_v, throw_val = throw_v, point_val = point_vic;
-		times = 100;
+		times = 1000;
 		cout << "Auto test for " << times << " times begins\n";
 	};
 
@@ -193,13 +193,13 @@ public:
 	inline void write_file(void) {
 
 		ofstream outfile;
-		outfile.open("autotest result.txt", ios::out | ios::in);
+		outfile.open("autotest result.txt", ios::out | ios::in | ios::trunc);
 
-		outfile << "Points\t" << "Gain_val\t" << "Gain_win\t"
-			<< "Throw_val\t" << "Throw_win" << endl;
+		outfile << "Points\t\t" << "Gain_val\t" << "Throw_val\t"
+			<< "Gain_win\t" << "Throw_win" << endl;
 
 		for (auto res : autotest_result) {
-			outfile << res[0] << "\t" << res[1] << "\t\t" << res[2] << "\t\t"
+			outfile << res[0] << "\t\t" << res[1] << "\t\t" << res[2] << "\t\t"
 				<< res[3] << "\t\t" << res[4] << endl;
 		}
 
