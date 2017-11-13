@@ -30,13 +30,13 @@ public:
 	// Default constructor
 	player();
 	// Constructor to start the game
-	player(string start);
-	// Constructor to create a player
+	player(vector<string> player_names);
+	// Constructor to create a player 
 	player(string input_name, int input_id);
 	// Default destructor
 	~player(void);
 	// Function to begin the game
-	void begin(vector<string> player_names);
+	void begin(void);
 	// Function to run each turn of the game
 	void run(void);
 	// Function to display the score board of the game
@@ -49,4 +49,3 @@ public:
 	bool is_victory(void);
 
 };
-

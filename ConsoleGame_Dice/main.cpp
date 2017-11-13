@@ -13,22 +13,36 @@ The sequence of the game should be specified explicitly
 maybe in the generic sequence with which they were created
 */
 
+template <class any>
+
+// Inline function to receive a valid integer input
+inline void input_integer(any &a, const char * error = "") {
+
+	while (!(cin >> a)) {
+		cin.clear();
+		while (cin.get() != '\n') continue;
+		cout << "Invalid Value! " << error << endl;
+	}
+
+}
+
+
 
 int main() {
 
 	// The variables for main functions
-	int player_num, auto_running;
+	int player_num, auto_running, gain_value, throw_value;
 	string player_name, line;
 	vector<string> player_names;
 	vector<player> players;
 	vector<autoplayer> autoplayers;
 
 	// All the test conditions
-	vector<int> gain_vals = { 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 }; //20
-	vector<int> throw_vals = { 1,2,3,4,5,6,7,8,9,10 }; //10
-	vector<int> point_vals = { 50,100,150 }; //150
+	vector<int> gain_vals = { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}; //20
+	vector<int> throw_vals = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; //10
+	vector<int> point_vals = { 50, 100, 150}; //150
 	// 16*10*11*5000 = 8,800,000
-	
+
 	cout << " --------------------------------------------\n"
 		<< "| " << setw(30) << " DICE GAME FOR ELEC362" << setw(15) << "|\n"
 		<< " --------------------------------------------\n"
@@ -49,14 +63,7 @@ int main() {
 	if (auto_running != 1) {
 
 		cout << "How many of you want to join in? ";
-		// Receive a valid integer input
-		cin >> player_num;
-		while (cin.fail()) {
-			cout << "Enter a valid integer. ";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cin >> player_num;
-		}
+		input_integer(player_num, "Enter a valid integer. ");
 		cout << endl;
 
 		// Initialise the players with specified name
@@ -65,14 +72,23 @@ int main() {
 			cin >> player_name;
 			player_names.push_back(player_name);
 		}
-		
+
 		// Start the game
-		player* start = new player("start");
-		start->begin(player_names);
+		player* start = new player(player_names);
+		start->begin();
 
 	}
 	else {
 
+		cout << "Please input gain value for strategy GAIN ";
+		input_integer(gain_value, "Enter a valid integer. ");
+		cout << "Please input throw value for strategy THROW ";
+		input_integer(throw_value, "Enter a valid integer. ");
+
+		autoplayer* start = new autoplayer(gain_value, throw_value);
+		start->begin();
+
+		/*
 		clock_t t;
 		t = clock();
 
@@ -82,6 +98,9 @@ int main() {
 
 		t = clock() - t;
 
+		printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+		*/
+
 		/* NOTICE
 		There are two statistics functions to get the results of auto game
 		One of them is called statistics, which runs the auto game in serial fashion and consumes time
@@ -89,7 +108,7 @@ int main() {
 		The statistics_ppl disable cout because parallel computing causes disorder in outstream
 		*/
 
-		printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+		
 
 	}
 
@@ -97,6 +116,8 @@ int main() {
 
 	return 0;
 }
+
+
 
 /*
 

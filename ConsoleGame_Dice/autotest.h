@@ -9,81 +9,13 @@
 #include <thread>
 #include <windows.h>
 #include <ppl.h>
-#include "player.h"
+#include "autoplayer.h"
 
 using namespace std;
 using namespace concurrency;
 
 // Global variable
 vector<vector<int>> autotest_result;
-
-// Class autoplayer that is inherited from player
-class autoplayer : public player {
-
-private:
-	// The private variables for class autoplayer
-	int num_throw, gain, thrw;
-	bool throws;
-
-public:
-	// Default constructor
-	autoplayer() {};
-
-	// Constructor to create an auto player
-	autoplayer(string input_name, int input_id, bool input_throws,
-		int input_thrw, int input_gain, int input_points) : player(input_name, input_id) {
-		throws = input_throws;
-		num_throw = input_thrw;
-		gain = input_gain;
-		point_victory = input_points;
-	};
-
-	// Default destructor
-	~autoplayer(void) {};
-
-	// Function to determine if there is enough gain
-	inline bool enough_gain(vector<int>& cur) {
-		int sum = 0;
-		for (auto i : cur) {
-			sum += i;
-		}
-		if (sum >= gain) return true;
-		else return false;
-	};
-
-	// Function to run the auto game
-	inline void auto_run(void) {
-		srand(time(0)); // help in the generation of random numbers
-		log = {}; // Log of current turns
-		thrw = 0;
-
-		while (true) {
-			dice = rand() % 6 + 1; // Roll the dice
-			thrw += 1;
-
-			// Fit two kinds of auto players (GAIN or THROW)
-			if (dice == 1) {
-				break;
-			}
-			else if (throws && thrw == num_throw) {
-				points.push_back(get_sum(log));
-				if (get_sum(points) >= point_victory) victory = true;
-				break;
-			}
-			else if (!throws && enough_gain(log)) {
-				points.push_back(get_sum(log));
-				if (get_sum(points) >= point_victory) victory = true;
-				break;
-			}
-			else {
-				log.push_back(dice);
-			}
-		}
-	};
-
-};
-
-
 
 // Class autotest to handle everything of auto game
 class autotest {
@@ -118,7 +50,7 @@ public:
 	~autotest() {};
 
 	// Function to check if there is a victory
-	inline bool is_victory_auto(vector<autoplayer>& players) {
+	bool autotest::is_victory_auto(vector<autoplayer>& players) {
 		bool any_victory = false;
 		for (auto player : players) {
 			any_victory |= player.victory;
@@ -129,7 +61,7 @@ public:
 	};
 
 	// Function to get all the possible combinations of three conditions
-	inline void get_combine(vector<int> g_list, vector<int> t_list, vector<int> p_list) {
+	void autotest::get_combine(vector<int> g_list, vector<int> t_list, vector<int> p_list) {
 		for (auto p : p_list) {
 			for (auto g : g_list) {
 				for (auto t : t_list) {
@@ -140,7 +72,7 @@ public:
 	}
 
 	// Function to run an auto game for autotest
-	inline void run() {
+	void autotest::run() {
 
 		autoplayer B("GAINS", 0, false, 0, gain_val, point_val);
 		autoplayer C("THROWS", 1, true, throw_val, 0, point_val);
@@ -150,6 +82,7 @@ public:
 		// Loop until there is any victory
 		while (!is_victory_auto(autoplayers)) {
 			// Sequence among players follows sequence of id
+			//display();
 			for (int i = 0; i < autoplayers.size(); i++) {
 				if (autoplayers[i].current) {
 					autoplayers[i].auto_run();
@@ -165,7 +98,7 @@ public:
 	};
 
 	// Function to begin the autotest for one condition combination 
-	inline void begin() {
+	void autotest::begin() {
 
 		// Run the auto game for specified times
 		while (time < times) {
@@ -188,7 +121,7 @@ public:
 	};
 
 	// Function for statistical analysis in serial computational fashion
-	inline void statistics(vector<int> g_list, vector<int> t_list, vector<int> p_list) {
+	void autotest::statistics(vector<int> g_list, vector<int> t_list, vector<int> p_list) {
 		autotest_result = {};
 		get_combine(g_list, t_list, p_list);
 		for_each(autotest_data.begin(), autotest_data.end(), [](vector<int>& d) {
@@ -200,7 +133,7 @@ public:
 	}
 
 	// Function for statistical analysis in parallel computational fashion
-	inline void statistics_ppl(vector<int> g_list, vector<int> t_list, vector<int> p_list) {
+	void autotest::statistics_ppl(vector<int> g_list, vector<int> t_list, vector<int> p_list) {
 		autotest_result = {};
 		get_combine(g_list, t_list, p_list);
 		parallel_for_each(autotest_data.begin(), autotest_data.end(), [](vector<int>& d) {
@@ -212,7 +145,7 @@ public:
 	}
 
 	// Function to write the autotest result to text file for further analysis and visualisation
-	inline void write_file(void) {
+	void autotest::write_file(void) {
 		ofstream outfile;
 		outfile.open("autotest result.txt", ios::out | ios::in | ios::trunc);
 

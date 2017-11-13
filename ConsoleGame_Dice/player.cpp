@@ -4,9 +4,13 @@
 player::player() {}
 
 // Constructor to start the game
-player::player(string start) {
-	if (start == "start")
-		cout << "Start the game\n";
+player::player(vector<string> player_names) {
+	cout << "Start the game\n";
+	// Create a player vector and fill in players
+	for (int j = 0; j < player_names.size(); j++) {
+		player A(player_names[j], j);
+		players.push_back(A);
+	}
 }
 
 // Constructor to create a player
@@ -23,13 +27,7 @@ player::player(string input_name, int input_id) {
 player::~player(void) {}
 
 // Function to begin the game
-void player::begin(vector<string> player_names) {
-
-	// Create a player vector and fill in players
-	for (int j = 0; j < player_names.size(); j++) {
-		player A(player_names[j], j);
-		players.push_back(A);
-	}
+void player::begin(void) {
 
 	// Loop the game until there is someone to win
 	while (true) {
@@ -48,7 +46,7 @@ void player::begin(vector<string> player_names) {
 			}
 		}
 		// Any one winning to break the loop
-		if (is_victory()) break; 
+		if (is_victory()) break;
 	}
 
 }
@@ -58,13 +56,13 @@ void player::run(void) {
 	srand(time(0)); // help in the generation of random numbers
 	log = {}; // Log of current turn
 	cout << name << " YOUR CURRENT SCORE _" << get_sum(points) << "_\n";
-	
+
 	while (true) {
 		cout << "1 to hold; others to roll the dice ";
 		cin >> input;
 
 		if (input == "1") {
-			cout << "Next turn \n";
+			cout << "Hold the turn. Next turn \n";
 			points.push_back(get_sum(log));
 
 			// When points greater than points to win
@@ -79,14 +77,14 @@ void player::run(void) {
 			dice = rand() % 6 + 1; // Roll the dice
 			Sleep(100);
 			cout << " Dice number _" << dice << "_" << endl;
-			
+
 			if (dice == 1) {
 				cout << "Next turn \n";
 				Sleep(500);
 				break;
 			}
 			else {
-				cout << "Keep rolling ";
+				cout << "Dice is 1. Keep rolling ";
 				log.push_back(dice);
 			}
 		}
