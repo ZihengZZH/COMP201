@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <time.h>
 #include "autotest.h"
+#include "autoplayer.h"
 #include "player.h"
 
 using namespace std;
@@ -38,9 +39,9 @@ int main() {
 	vector<autoplayer> autoplayers;
 
 	// All the test conditions
-	vector<int> gain_vals = { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}; //20
-	vector<int> throw_vals = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; //10
-	vector<int> point_vals = { 50, 100, 150}; //150
+	vector<int> gain_vals = { 5,6 }; //20
+	vector<int> throw_vals = { 1,2 }; //10
+	vector<int> point_vals = { 50, 100, 150 }; //150
 	// 16*10*11*5000 = 8,800,000
 
 	cout << " --------------------------------------------\n"
@@ -52,15 +53,17 @@ int main() {
 		<< "First is to hold at specific gain and "
 		<< "the other is to hold after specific number of throws\n"
 		<< "------------------------------------------------------------\n"
-		<< "Would you like to automatically run the program\n"
-		<< "1 to confirm; others to cancel\n";
+		<< "What game would you like to play\n"
+		<< "1. multiplayer mode\n"
+		<< "2. autoplayer mode\n"
+		<< "other autotest the game\n";
 
 	// Receive the input securely
 	getline(cin, line);
 	stringstream ss(line);
 	ss >> auto_running;
 
-	if (auto_running != 1) {
+	if (auto_running == 1) {
 
 		cout << "How many of you want to join in? ";
 		input_integer(player_num, "Enter a valid integer. ");
@@ -78,17 +81,19 @@ int main() {
 		start->begin();
 
 	}
-	else {
+	else if (auto_running == 2) {
 
 		cout << "Please input gain value for strategy GAIN ";
 		input_integer(gain_value, "Enter a valid integer. ");
 		cout << "Please input throw value for strategy THROW ";
 		input_integer(throw_value, "Enter a valid integer. ");
 
-		autoplayer* start = new autoplayer(gain_value, throw_value);
+		autoplayer* start = new autoplayer(gain_value, throw_value, 100);
 		start->begin();
 
-		/*
+	}
+	else {
+
 		clock_t t;
 		t = clock();
 
@@ -99,7 +104,7 @@ int main() {
 		t = clock() - t;
 
 		printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
-		*/
+
 
 		/* NOTICE
 		There are two statistics functions to get the results of auto game
@@ -108,7 +113,7 @@ int main() {
 		The statistics_ppl disable cout because parallel computing causes disorder in outstream
 		*/
 
-		
+
 
 	}
 

@@ -8,8 +8,7 @@ player::player(vector<string> player_names) {
 	cout << "Start the game\n";
 	// Create a player vector and fill in players
 	for (int j = 0; j < player_names.size(); j++) {
-		player A(player_names[j], j);
-		players.push_back(A);
+		players.push_back(player(player_names[j], j));
 	}
 }
 
@@ -60,11 +59,9 @@ void player::run(void) {
 	while (true) {
 		cout << "1 to hold; others to roll the dice ";
 		cin >> input;
-
 		if (input == "1") {
 			cout << "Hold the turn. Next turn \n";
 			points.push_back(get_sum(log));
-
 			// When points greater than points to win
 			if (get_sum(points) >= point_victory) {
 				victory = true;
@@ -77,14 +74,13 @@ void player::run(void) {
 			dice = rand() % 6 + 1; // Roll the dice
 			Sleep(100);
 			cout << " Dice number _" << dice << "_" << endl;
-
 			if (dice == 1) {
-				cout << "Next turn \n";
+				cout << "Dice is 1. Next turn \n";
 				Sleep(500);
 				break;
 			}
 			else {
-				cout << "Dice is 1. Keep rolling ";
+				cout << "Keep rolling ";
 				log.push_back(dice);
 			}
 		}

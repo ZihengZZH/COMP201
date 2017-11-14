@@ -35,6 +35,7 @@ public:
 	player(string input_name, int input_id);
 	// Default destructor
 	~player(void);
+
 	// Function to begin the game
 	void begin(void);
 	// Function to run each turn of the game
