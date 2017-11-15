@@ -9,9 +9,7 @@
 #include <ctime>
 #include "player.h"
 
-
 using namespace std;
-
 
 // Class autoplayer that is inherited from player
 class autoplayer : public player {
@@ -32,7 +30,7 @@ public:
 	autoplayer(string input_name, int input_id, bool input_throws, int input_thrw,
 		int input_gain, int input_points);
 	// Default destructor
-	~autoplayer(void);
+	~autoplayer();
 
 	// Function to determine if there is enough gain
 	bool autoplayer::enough_gain(vector<int>& cur);

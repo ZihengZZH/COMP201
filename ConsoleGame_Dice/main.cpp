@@ -16,6 +16,7 @@ maybe in the generic sequence with which they were created
 
 template <class any>
 
+
 // Inline function to receive a valid integer input
 inline void input_integer(any &a, const char * error = "") {
 
@@ -26,7 +27,6 @@ inline void input_integer(any &a, const char * error = "") {
 	}
 
 }
-
 
 
 int main() {
@@ -53,10 +53,10 @@ int main() {
 		<< "First is to hold at specific gain and "
 		<< "the other is to hold after specific number of throws\n"
 		<< "------------------------------------------------------------\n"
-		<< "What game would you like to play\n"
+		<< "Which game would you like to play\n"
 		<< "1. multiplayer mode\n"
 		<< "2. autoplayer mode\n"
-		<< "other autotest the game\n";
+		<< "others autotest the game\n";
 
 	// Receive the input securely
 	getline(cin, line);
@@ -103,7 +103,8 @@ int main() {
 
 		t = clock() - t;
 
-		printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+		cout << "The autotest has finished." << endl;
+		printf("It takes %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 
 
 		/* NOTICE
@@ -112,8 +113,6 @@ int main() {
 		The other is called statistics_ppl, which runs the auto game in parallel fashion and saves time
 		The statistics_ppl disable cout because parallel computing causes disorder in outstream
 		*/
-
-
 
 	}
 

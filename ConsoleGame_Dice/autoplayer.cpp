@@ -1,6 +1,8 @@
 #include "autoplayer.h"
 
+
 autoplayer::autoplayer() {}
+
 
 autoplayer::autoplayer(int gain_v, int throw_v, int point_v) {
 	cout << "Start the auto game\n";
@@ -8,6 +10,7 @@ autoplayer::autoplayer(int gain_v, int throw_v, int point_v) {
 	autoplayers.push_back(autoplayer("GAINS", 0, false, 0, gain_v, point_v));
 	autoplayers.push_back(autoplayer("THROWS", 1, true, throw_v, 0, point_v));
 }
+
 
 // Constructor to create an auto player
 autoplayer::autoplayer(string input_name, int input_id, bool input_throws,
@@ -18,8 +21,10 @@ autoplayer::autoplayer(string input_name, int input_id, bool input_throws,
 	point_victory = input_points;
 }
 
+
 // Default destructor
-autoplayer::~autoplayer(void) {}
+autoplayer::~autoplayer() {}
+
 
 // Function to determine if there is enough gain
 bool autoplayer::enough_gain(vector<int>& cur) {
@@ -30,6 +35,7 @@ bool autoplayer::enough_gain(vector<int>& cur) {
 	if (sum >= gain_val) return true;
 	else return false;
 }
+
 
 // Function to run an auto game for autotest
 void autoplayer::begin(void) {
@@ -50,6 +56,7 @@ void autoplayer::begin(void) {
 		}
 	}
 }
+
 
 // Function to run the auto game
 void autoplayer::auto_run(void) {
@@ -93,6 +100,7 @@ void autoplayer::auto_run(void) {
 	}
 }
 
+
 // Function to check if there is a victory
 bool autoplayer::is_victory_auto(void) {
 	bool any_victory = false;
@@ -103,6 +111,7 @@ bool autoplayer::is_victory_auto(void) {
 	// cout << "Any victory? " << boolalpha << victory << endl;
 	return any_victory;
 }
+
 
 // Function to return winner name
 string autoplayer::get_winner(void) {
