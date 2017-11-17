@@ -1,9 +1,7 @@
 #include "player.h"
 
-
 // Default constructor
 player::player() {}
-
 
 // Constructor to start the game
 player::player(vector<string> player_names) {
@@ -13,7 +11,6 @@ player::player(vector<string> player_names) {
 		players.push_back(player(player_names[j], j));
 	}
 }
-
 
 // Constructor to create a player
 player::player(string input_name, int input_id) {
@@ -25,10 +22,8 @@ player::player(string input_name, int input_id) {
 	cout << "player " << input_name << " has been created\n";
 }
 
-
 // Default destructor
-player::~player() {}
-
+player::~player(void) {}
 
 // Function to begin the game
 void player::begin(void) {
@@ -54,7 +49,6 @@ void player::begin(void) {
 	}
 
 }
-
 
 // Function to run each turn of the game
 void player::run(void) {
@@ -93,7 +87,6 @@ void player::run(void) {
 	}
 }
 
-
 // Function to display the score board of the game
 void player::display(void) {
 	cout << " -------------   SCORE BOARD   -------------\n";
@@ -104,7 +97,6 @@ void player::display(void) {
 	cout << " -------------------------------------------\n";
 }
 
-
 // Function to calculate the sum of a vector
 int player::get_sum(vector<int>& nums) {
 	int sum = 0;
@@ -114,12 +106,10 @@ int player::get_sum(vector<int>& nums) {
 	return sum;
 }
 
-
 // Function to retrieve the name of a player
 string player::get_name(void) {
 	return name;
 }
-
 
 // Function to check if there is a victory
 bool player::is_victory() {

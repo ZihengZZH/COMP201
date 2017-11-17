@@ -1,8 +1,5 @@
-#include <iostream>
-#include <string>
 #include <sstream>
 #include <iomanip>
-#include <time.h>
 #include "autotest.h"
 #include "autoplayer.h"
 #include "player.h"
@@ -14,18 +11,33 @@ The sequence of the game should be specified explicitly
 maybe in the generic sequence with which they were created
 */
 
-template <class any>
 
+// Function to receive a valid integer input
+inline int get_integer(int min, int max, std::string prompt) {
+	int ret_integer;
+	string str_number;
 
-// Inline function to receive a valid integer input
-inline void input_integer(any &a, const char * error = "") {
-
-	while (!(cin >> a)) {
-		cin.clear();
-		while (cin.get() != '\n') continue;
-		cout << "Invalid Value! " << error << endl;
+	while (true) {
+		cout << prompt;
+		getline(cin, str_number); // Get string input
+		stringstream convert(str_number); // Turn the string into a stream
+		if (convert >> ret_integer && !(convert >> str_number) 
+			&& ret_integer <= max && ret_integer >= min) 
+			return ret_integer;
+		cin.clear(); // In case an error occurs with cin (eof(), etc)
+		cerr << "Input must be integer in range [" 
+			<< min << "," << max << "]. Please try again.\n";
 	}
+}
 
+// Function to show the conditions for auto test
+inline void show_vector(vector<int> vec, string name) {
+
+	cout << "\nThe conditions for " << name << " is as follows" << endl;
+	for (auto i : vec) {
+		cout << " " << i;
+	}
+	cout << endl;
 }
 
 
@@ -39,8 +51,8 @@ int main() {
 	vector<autoplayer> autoplayers;
 
 	// All the test conditions
-	vector<int> gain_vals = { 5,6 }; //20
-	vector<int> throw_vals = { 1,2 }; //10
+	vector<int> gain_vals = { 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 }; //20
+	vector<int> throw_vals = { 1,2,3,4,5,6,7,8,9,10 }; //10
 	vector<int> point_vals = { 50, 100, 150 }; //150
 	// 16*10*11*5000 = 8,800,000
 
@@ -53,10 +65,10 @@ int main() {
 		<< "First is to hold at specific gain and "
 		<< "the other is to hold after specific number of throws\n"
 		<< "------------------------------------------------------------\n"
-		<< "Which game would you like to play\n"
+		<< "What game would you like to play\n"
 		<< "1. multiplayer mode\n"
 		<< "2. autoplayer mode\n"
-		<< "others autotest the game\n";
+		<< "other autotest the game\n";
 
 	// Receive the input securely
 	getline(cin, line);
@@ -65,8 +77,7 @@ int main() {
 
 	if (auto_running == 1) {
 
-		cout << "How many of you want to join in? ";
-		input_integer(player_num, "Enter a valid integer. ");
+		player_num = get_integer(2, 20, "How many of you want to join in? ");
 		cout << endl;
 
 		// Initialise the players with specified name
@@ -83,19 +94,21 @@ int main() {
 	}
 	else if (auto_running == 2) {
 
-		cout << "Please input gain value for strategy GAIN ";
-		input_integer(gain_value, "Enter a valid integer. ");
-		cout << "Please input throw value for strategy THROW ";
-		input_integer(throw_value, "Enter a valid integer. ");
+		gain_value = get_integer(1, 50, "Please input gain value for strategy GAIN ");
+		throw_value = get_integer(1, 20, "Please input throw value for strategy THROW ");
 
 		autoplayer* start = new autoplayer(gain_value, throw_value, 100);
 		start->begin();
-
+		 
 	}
 	else {
 
 		clock_t t;
 		t = clock();
+
+		show_vector(gain_vals, "GAIN values");
+		show_vector(throw_vals, "THROW values");
+		show_vector(point_vals, "Point to win");
 
 		// Start the auto game
 		autotest* result = new autotest("start");
@@ -103,8 +116,7 @@ int main() {
 
 		t = clock() - t;
 
-		cout << "The autotest has finished." << endl;
-		printf("It takes %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+		printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 
 
 		/* NOTICE
@@ -125,15 +137,15 @@ int main() {
 
 /*
 
-36,000
+data scale	36,000
 parallel	38s
 serial		80s
 
-24,000
+data scale	24,000
 parallel	21s
 serial		46s
 
-2,400,000
+data scale	2,400,000
 parallel	2583s
 
 */

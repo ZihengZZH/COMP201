@@ -1,13 +1,7 @@
 #pragma once
-#include <iostream>
 #include <fstream>
-#include <string>
-#include <vector>
 #include <cstdlib>
-#include <stdlib.h>
-#include <ctime>
 #include <thread>
-#include <windows.h>
 #include <ppl.h>
 #include "player.h"
 #include "autoplayer.h"
@@ -38,7 +32,7 @@ public:
 	// Constructor to start the autotest
 	autotest(string start) {
 		if (start == "start")
-			cout << "AUTO TEST RUNNING\n";
+			cout << "\nAUTO TEST RUNNING\n";
 	};
 
 	// Constructor to start one auto game of autotest
@@ -96,6 +90,7 @@ public:
 			autotest A(d[0], d[1], d[2]);
 			A.begin();
 		});
+		cout.clear();
 		write_file();
 	};
 
@@ -108,6 +103,7 @@ public:
 			autotest A(d[0], d[1], d[2]);
 			A.begin();
 		});
+		cout.clear();
 		write_file();
 	};
 
@@ -123,8 +119,7 @@ public:
 			outfile << res[0] << "\t\t" << res[1] << "\t\t" << res[2] << "\t\t"
 				<< res[3] << "\t\t" << res[4] << endl;
 		}
-
+		cout << "AUTOTEST RESULT WRITTEN TO FILE SUCCESSFULLY" << endl;
 	};
 
 };
-

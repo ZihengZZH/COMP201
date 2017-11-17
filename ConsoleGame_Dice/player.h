@@ -34,7 +34,7 @@ public:
 	// Constructor to create a player 
 	player(string input_name, int input_id);
 	// Default destructor
-	~player();
+	~player(void);
 
 	// Function to begin the game
 	void begin(void);
