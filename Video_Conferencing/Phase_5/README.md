@@ -15,3 +15,12 @@ NOTES
 --
 Maybe it is time to move on to next significant phase "synthesised view" because the previous phases might be adjusted.
 And more importantly, synthesised view is vital the video conferencing project.
+
+Examples on Disparity Map
+--
+ALGORITHM SGBM (num=144, SAD=3)
+
+![L](https://github.com/ZihengZZH/Project_Cpp/blob/master/Video_Conferencing/Phase_5/test_L.png)
+![R](https://github.com/ZihengZZH/Project_Cpp/blob/master/Video_Conferencing/Phase_5/test_R.png)
+![dis](https://github.com/ZihengZZH/Project_Cpp/blob/master/Video_Conferencing/Phase_5/dist.png)
+
